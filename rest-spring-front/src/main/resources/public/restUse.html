@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AJAX">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+
+
+</head>
+<body>
+
+<div class="restaurantes"></div>
+
+<div id="restaurantes" style="display: none"></div>
+<script type="text/html" id="template">
+    <div class="container">
+        <div class='row'>
+            <div class="col-md-8">
+                <div data-content="name"></div>
+                <div data-content="address"></div>
+                <div data-content="numero"></div>
+                <div data-content="website"></div>
+                <div data-content="type"></div>
+                <div data-content="mitjana"></div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</script>
+
+<script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="js/jquery.loadTemplate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log($("#myTitle").html());
+        $.get("/restaurants", function (data) {
+            console.log(data);
+            var contentHtml = "<h2>AJAX</h2>";
+            $.each(data, function (index, value) {
+
+                $("#restaurantes").loadTemplate($("#template"),
+                    {
+                        name: value.name,
+                        address: value.address,
+                        numero: value.numero,
+                        website: value.website,
+                        type: value.type,
+                        mitjana: value.mitjana
+
+                    });
+                var cell = $("#restaurantes").html();
+                contentHtml += cell;
+
+            });
+            $(".restaurantes").html(contentHtml);
+            console.log("Load was performed.");
+        });
+    });
+</script>
+</body>
+</html>
